@@ -7,8 +7,8 @@ use Exporter 'import';
 use FindBin qw($Bin);
 use Ham::DXCC::Lookup::DB::ctydat_full;
 
-my $db = Ham::DXCC::Lookup::DB::ctydat_full->new({ directory => "$Bin/../data" });
-my @prefixes;
+our $db = Ham::DXCC::Lookup::DB::ctydat_full->new({ directory => "$Bin/../data" });
+our @prefixes;
 
 our @EXPORT_OK = qw(lookup_dxcc);
 our $VERSION = '0.01';
@@ -43,6 +43,7 @@ sub lookup_dxcc
 	if(my $rc = $db->fetchrow_hashref({ prefix => "=$callsign" })) {
 		return $rc;
 	}
+
 	if(scalar(@prefixes) == 0) {
 		@prefixes = $db->prefix();
 	}
@@ -67,8 +68,28 @@ This module is provided as-is without any warranty.
 
 Nigel Horne, C<< <njh at nigelhorne.com> >>
 
-=head1 LICENSE
+=head1 SEE ALSO
 
-This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+L<https://www.country-files.com/>
+
+=head1 LICENCE AND COPYRIGHT
+
+Copyright 2025 Nigel Horne.
+
+Usage is subject to licence terms.
+
+The licence terms of this software are as follows:
+
+=over 4
+
+=item * Personal single user, single computer use: GPL2
+
+=item * All other users (including Commercial, Charity, Educational, Government)
+  must apply in writing for a licence for use from Nigel Horne at the
+  above e-mail.
+
+=back
 
 =cut
+
+1;

@@ -1,5 +1,4 @@
 bin/create_db.PL
-bin/createdatabase.PL
 Changes
 downloads/cty.dat
 lib/Ham/DXCC/Lookup.pm

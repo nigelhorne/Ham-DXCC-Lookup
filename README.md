@@ -27,6 +27,19 @@ This module is provided as-is without any warranty.
 
 Nigel Horne, `<njh at nigelhorne.com>`
 
-# LICENSE
+# SEE ALSO
 
-This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+[https://www.country-files.com/](https://www.country-files.com/)
+
+# LICENCE AND COPYRIGHT
+
+Copyright 2025 Nigel Horne.
+
+Usage is subject to licence terms.
+
+The licence terms of this software are as follows:
+
+- Personal single user, single computer use: GPL2
+- All other users (including Commercial, Charity, Educational, Government)
+  must apply in writing for a licence for use from Nigel Horne at the
+  above e-mail.
