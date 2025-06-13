@@ -23,7 +23,7 @@ WriteMakefile(
             # license    => 'http://dev.perl.org/licenses/',
         },
     },
-    MIN_PERL_VERSION => '5.10',
+    MIN_PERL_VERSION => '5.010',
     ($ExtUtils::MakeMaker::VERSION >= 6.64
         ? (LICENSE => 'GPL')
         : ()),
