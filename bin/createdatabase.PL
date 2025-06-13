@@ -27,12 +27,19 @@ while(my $line = <$cty>) {
 	my ($name, $cqzone, $ituzone, $cont, $lat, $lon, $gmt_offset, $primary_prefix) = unpack('A26 A5 A5 A5 A9 A10 A9 A6', $line);
 
 	$name	 =~ s/\s+$//;
+	$name =~ s/:$//;
 	$cqzone   =~ s/\s+$//;
+	$cqzone =~ s/:$//;
 	$ituzone  =~ s/\s+$//;
+	$ituzone =~ s/:$//;
 	$cont   =~ s/\s+$//;
+	$cont =~ s/:$//;
 	$lat	  =~ s/\s+$//;
+	$lat =~ s/:$//;
 	$lon	  =~ s/\s+$//;
+	$lon =~ s/:$//;
 	$gmt_offset	  =~ s/\s+$//;
+	$gmt_offset =~ s/:$//;
 	$primary_prefix =~ s/\s+$//;
 	$primary_prefix =~ s/:$//;
 
