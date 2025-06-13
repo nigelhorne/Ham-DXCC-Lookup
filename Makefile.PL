@@ -26,6 +26,7 @@ WriteMakefile(
     PREREQ_PM    => {
 	'Database::Abstraction' => 0,
         'Exporter' => 0,
+	'FindBin' => 0,
 	'Text::CSV' => 0,
 	}, TEST_REQUIRES => {
 		'Test::DescribeMe' => 0,

@@ -4,14 +4,10 @@ use strict;
 use warnings;
 
 use Exporter 'import';
-use Database::Abstraction;
+use FindBin qw($Bin);
 use Ham::DXCC::Lookup::DB::ctydat_full;
 
-BEGIN {
-	Database::Abstraction::init({ directory => 'data' });
-};
-
-my $db = Ham::DXCC::Lookup::DB::ctydat_full->new();
+my $db = Ham::DXCC::Lookup::DB::ctydat_full->new({ directory => "$Bin/../data" });
 my @prefixes;
 
 our @EXPORT_OK = qw(lookup_dxcc);
