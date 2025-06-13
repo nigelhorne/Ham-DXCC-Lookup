@@ -1,61 +1,74 @@
 #!/usr/bin/env perl
+
+# Download the data from https://www.country-files.com/
+
 use strict;
 use warnings;
-use Text::CSV;
 
-my $file = 'data/cty.dat';
+use Text::CSV;
+use autodie qw(:all);
+
+my $file = 'downloads/cty.dat';
 
 open my $cty, '<', $file;
 
 my $csv = Text::CSV->new({binary => 1, eol => "\n"});
 
-open my $out, '>:encoding(utf8)', 'ctydat_full.csv' or die $!;
+open my $out, '>:encoding(utf8)', 'data/ctydat_full.csv' or die $!;
 
 # Header (added gmt_offset and dxcc_number)
-$csv->print($out, [qw(prefix dxcc_name iso cq_zone itu_zone continent latitude longitude gmt_offset dxcc_number)]);
+$csv->print($out, [qw(prefix dxcc_name iso cq_zone itu_zone continent latitude longitude gmt_offset primary_prefix)]);
 
-for my $line (split /\n/, $cty) {
-    next unless length $line >= 70;  # basic sanity check
+while(my $line = <$cty>) {
+	chomp $line;
+	next unless length $line >= 70;	# basic sanity check
+	$line =~ s/\r//g;
 
-    # Unpack fields based on fixed width from AD1C docs:
-    # Name(26), DXCC # (4), CQ Zone(3), ITU Zone(3), Latitude(6), Longitude(7),
-    # Prefixes (variable at end)
-    my ($name, $dxcc_num, $cqzone, $ituzone, $lat, $lon, $prefixes) = unpack('A26 A4 A3 A3 A6 A7 A*', $line);
+	my ($name, $cqzone, $ituzone, $cont, $lat, $lon, $gmt_offset, $primary_prefix) = unpack('A26 A5 A5 A5 A9 A10 A9 A6', $line);
 
-    $name     =~ s/\s+$//;
-    $dxcc_num =~ s/\s+$//;
-    $cqzone   =~ s/\s+$//;
-    $ituzone  =~ s/\s+$//;
-    $lat      =~ s/\s+$//;
-    $lon      =~ s/\s+$//;
-    $prefixes =~ s/\s+$//;
+	$name	 =~ s/\s+$//;
+	$cqzone   =~ s/\s+$//;
+	$ituzone  =~ s/\s+$//;
+	$cont   =~ s/\s+$//;
+	$lat	  =~ s/\s+$//;
+	$lon	  =~ s/\s+$//;
+	$gmt_offset	  =~ s/\s+$//;
+	$primary_prefix =~ s/\s+$//;
+	$primary_prefix =~ s/:$//;
 
-    # iso and gmt_offset not available in CTY.DAT, so empty or you add a map later
-    my $iso = '';
-    my $gmt_offset = '';
+	# iso not available in CTY.DAT, so empty or you add a map later
+	my $iso = '';
 
-    # Prefixes can be comma or semicolon separated, often with modifiers (* = ...)
-    my @prefix_list = split /[,;]/, $prefixes;
+	while(1) {
+		my $prefixes = <$cty>;
+		chomp $prefixes;
+	$prefixes =~ s/\r//g;
 
-    for my $p (@prefix_list) {
-        # Clean modifiers, brackets, etc.
-        $p =~ s/^[\*=\~\<\>\{\}\#\[\]\/\+]+//;
-        $p =~ s/[\#\[\]\(\)]//g;
-        next unless $p =~ /\w/;
+		# Prefixes can be comma or semicolon separated, often with modifiers (* = ...)
+		my @prefix_list = split /[,;]/, $prefixes;
 
-        $csv->print($out, [
-            $p,
-            $name,
-            $iso,
-            $cqzone,
-            $ituzone,
-            '',       # continent, not in CTY.DAT
-            $lat,
-            $lon,
-            $gmt_offset,
-            $dxcc_num,
-        ]);
-    }
+		for my $p (@prefix_list) {
+		# Clean modifiers, brackets, etc.
+		$p =~ s/^[\*=\~\<\>\{\}\#\[\]\/\+]+//;
+		$p =~ s/[\#\[\]\(\)]//g;
+		$p =~ s/^\s+//g;
+		next unless $p =~ /\w/;
+
+		$csv->print($out, [
+			$p,
+			$name,
+			$iso,
+			$cqzone,
+			$ituzone,
+			$cont,
+			$lat,
+			$lon,
+			$gmt_offset,
+			$primary_prefix,
+		]);
+		}
+		last if($prefixes =~ /;$/);
+	}
 }
 
 close $out;
