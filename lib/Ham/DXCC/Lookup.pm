@@ -9,9 +9,8 @@ use Readonly;
 Readonly my $CSV_FILE => __FILE__ =~ s{Ham/DXCC/Lookup\.pm}{../scripts/ctydat_full.csv}r;
 
 our @EXPORT_OK = qw(lookup_dxcc);
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
-# Load mapping at compile time
 my %by_prefix;
 {
     open my $fh, '<:encoding(utf8)', $CSV_FILE or croak "Can't open $CSV_FILE: $!";
@@ -22,12 +21,14 @@ my %by_prefix;
         my $pre = uc $row->{prefix};
         $by_prefix{$pre} = {
             dxcc      => $row->{dxcc_name},
-            iso       => $row->{iso},          # 3‑letter ADIF code
-            cq_zone   => $row->{cq_zone},
-            itu_zone  => $row->{itu_zone},
-            continent => $row->{continent},
-            lat       => $row->{latitude},
-            lon       => $row->{longitude},
+            iso       => $row->{iso} || '',
+            cq_zone   => $row->{cq_zone} || '',
+            itu_zone  => $row->{itu_zone} || '',
+            continent => $row->{continent} || '',
+            lat       => $row->{latitude} || '',
+            lon       => $row->{longitude} || '',
+            gmt_offset => $row->{gmt_offset} || '',
+            dxcc_number => $row->{dxcc_number} || '',
         };
     }
 }
@@ -40,13 +41,15 @@ sub lookup_dxcc {
         return $by_prefix{$pre} if index($callsign, $pre) == 0;
     }
     return {
-        dxcc      => 'Unknown',
-        iso       => '',
-        cq_zone   => '',
-        itu_zone  => '',
-        continent => '',
-        lat       => '',
-        lon       => '',
+        dxcc       => 'Unknown',
+        iso        => '',
+        cq_zone    => '',
+        itu_zone   => '',
+        continent  => '',
+        lat        => '',
+        lon        => '',
+        gmt_offset => '',
+        dxcc_number => '',
     };
 }
 
