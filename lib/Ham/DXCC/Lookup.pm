@@ -26,7 +26,7 @@ Ham::DXCC::Lookup - Look up DXCC entity and ISO country code from amateur radio 
     use Ham::DXCC::Lookup qw(lookup_dxcc);
 
     my $info = lookup_dxcc('G4ABC');
-    print "DXCC: $info->{dxcc}, ISO: $info->{iso}\n";
+    print "DXCC: $info->{dxcc_name}\n";
 
 =head1 DESCRIPTION
 
@@ -36,7 +36,7 @@ This module provides a simple lookup mechanism to return the DXCC entity and ISO
 
 =head2 lookup_dxcc($callsign)
 
-Returns a hashref with C<dxcc> and C<iso> for the given callsign.
+Returns a hashref with C<dxcc> for the given callsign.
 
 =cut
 
@@ -63,9 +63,13 @@ sub lookup_dxcc
 
 __END__
 
+=head1 SUPPORT
+
+This module is provided as-is without any warranty.
+
 =head1 AUTHOR
 
-Nigel Horne
+Nigel Horne, C<< <njh at nigelhorne.com> >>
 
 =head1 LICENSE
 

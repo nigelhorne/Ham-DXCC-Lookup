@@ -1,8 +1,14 @@
+bin/create_db.PL
 bin/createdatabase.PL
 downloads/cty.dat
 lib/Ham/DXCC/Lookup.pm
+lib/Ham/DXCC/Lookup/DB/ctydat_full.pm
 LICENSE
 Makefile.PL
-MANIFEST			This list of files
+MANIFEST
+MANIFEST.SKIP
 README.md
 t/30-basics.t
+t/eof.t
+t/eol.t
+t/pod.t

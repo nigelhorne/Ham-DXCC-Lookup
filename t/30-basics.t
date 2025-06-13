@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::Most tests => 3;
 
 use Ham::DXCC::Lookup qw(lookup_dxcc);
 

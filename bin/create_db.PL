@@ -9,15 +9,37 @@ use Text::CSV;
 use autodie qw(:all);
 
 my $file = 'downloads/cty.dat';
+my $filename = 'data/ctydat_full.csv';
 
-open my $cty, '<', $file;
+if(!-d 'data') {
+	mkdir 'data', 0755;
+}
 
-my $csv = Text::CSV->new({binary => 1, eol => "\n"});
+my $force_flag;
+if(defined($ARGV[0]) && ($ARGV[0] eq '-f')) {
+	$force_flag++;
+} elsif($ENV{'AUTOMATED_TESTING'}) {
+	open my $out, '>', 'data/ctydat_full.csv';
+	print $out "prefix,dxcc_name,iso,cq_zone,itu_zone,continent,latitude,longitude,gmt_offset,primary_prefix\n";
+	exit;
+}
 
-open my $out, '>:encoding(utf8)', 'data/ctydat_full.csv' or die $!;
+if(-r $filename) {
+	# Don't bother downloading if the file is less than a day old
+	if(((-s $filename) > 0) && (-M $filename < 1) && !$force_flag) {
+		exit;
+	}
+	unlink $filename;
+}
+
+open(my $out, '>:encoding(utf8)', 'data/ctydat_full.csv');
+
+my $csv = Text::CSV->new({ binary => 1, eol => "\n" });
 
 # Header (added gmt_offset and dxcc_number)
 $csv->print($out, [qw(prefix dxcc_name iso cq_zone itu_zone continent latitude longitude gmt_offset primary_prefix)]);
+
+open(my $cty, '<', $file);
 
 while(my $line = <$cty>) {
 	chomp $line;
@@ -28,9 +50,9 @@ while(my $line = <$cty>) {
 
 	$name	 =~ s/\s+$//;
 	$name =~ s/:$//;
-	$cqzone   =~ s/\s+$//;
+	$cqzone =~ s/\s+$//;
 	$cqzone =~ s/:$//;
-	$ituzone  =~ s/\s+$//;
+	$ituzone =~ s/\s+$//;
 	$ituzone =~ s/:$//;
 	$cont   =~ s/\s+$//;
 	$cont =~ s/:$//;
@@ -41,7 +63,7 @@ while(my $line = <$cty>) {
 	$lon	  =~ s/\s+$//;
 	$lon =~ s/:$//;
 	$gmt_offset	  =~ s/^\s+//;
-	$gmt_offset	  =~ s/\s+$//;
+	$gmt_offset	 =~ s/\s+$//;
 	$gmt_offset =~ s/:$//;
 	$primary_prefix =~ s/\s+$//;
 	$primary_prefix =~ s/:$//;
