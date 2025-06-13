@@ -1,6 +1,6 @@
 # NAME
 
-Ham::DXCC::Lookup - Look up DXCC entity and ISO country code from amateur radio callsign
+Ham::DXCC::Lookup - Look up DXCC entity from amateur radio callsign
 
 # SYNOPSIS
 
@@ -11,7 +11,7 @@ Ham::DXCC::Lookup - Look up DXCC entity and ISO country code from amateur radio 
 
 # DESCRIPTION
 
-This module provides a simple lookup mechanism to return the DXCC entity and ISO 3166-1 alpha-2 country code from a given amateur radio callsign.
+This module provides a simple lookup mechanism to return the DXCC entity from a given amateur radio callsign.
 
 # FUNCTIONS
 
