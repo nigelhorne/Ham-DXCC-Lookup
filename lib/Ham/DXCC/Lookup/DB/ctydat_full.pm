@@ -4,6 +4,14 @@ package Ham::DXCC::Lookup::DB::ctydat_full;
 
 use Database::Abstraction;
 
+=head1 VERSION
+
+Version 0.01
+
+=cut
+
+our $VERSION = '0.01';
+
 our @ISA = ('Database::Abstraction');
 
 # Standard CSV file - ',' separator and the first column is not "entry"

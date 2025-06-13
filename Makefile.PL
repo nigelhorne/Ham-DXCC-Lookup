@@ -25,31 +25,43 @@ if($^O eq 'darwin') {
 }
 
 WriteMakefile(
-    NAME         => 'Ham::DXCC::Lookup',
-    VERSION_FROM => 'lib/Ham/DXCC/Lookup.pm', # finds $VERSION
-    AUTHOR       => 'Nigel Horne <njh@nigelhorne.com',
-    ABSTRACT_FROM => 'lib/Ham/DXCC/Lookup.pm',
-    PREREQ_PM    => {
-	'Database::Abstraction' => 0,
-        'Exporter' => 0,
-	'FindBin' => 0,
-	'Text::CSV' => 0,
+	NAME         => 'Ham::DXCC::Lookup',
+	VERSION_FROM => 'lib/Ham/DXCC/Lookup.pm', # finds $VERSION
+	AUTHOR       => 'Nigel Horne <njh@nigelhorne.com',
+	ABSTRACT_FROM => 'lib/Ham/DXCC/Lookup.pm',
+	PREREQ_PM    => {
+		'Database::Abstraction' => 0,
+		'DBD::CSV' => 0,
+		'Exporter' => 0,
+		'FindBin' => 0,
+		'Text::CSV' => 0,
 	}, TEST_REQUIRES => {
 		'Test::DescribeMe' => 0,
 		'Test::Most' => 0,
 		'Test::Needs' => 0,
-    },
-    META_MERGE => {
-        resources => {
-            repository => 'https://github.com/nigelhorne/ham-dxcc-lookup',
-            bugtracker => 'https://github.com/nigelhorne/ham-dxcc-lookup/issues',
-            # license    => 'http://dev.perl.org/licenses/',
-        },
-    },
-    MIN_PERL_VERSION => '5.010',
+	},
+	META_MERGE => {	# https://perldoc.perl.org/CPAN::Meta::Spec
+		'meta-spec' => { version => 2 },
+		resources => {
+			homepage => 'https://metacpan.org/pod/Ham::DXCC::Lookup',
+			repository => {
+				repository => 'https://github.com/nigelhorne/Ham-DXCC-Lookup',
+				type => 'git',
+				url => 'git://github.com/nigelhorne/Ham-DXCC-Lookup.git',
+				web => 'https://github.com/nigelhorne/Ham-DXCC-Lookup',
+				# license    => 'http://dev.perl.org/licenses/',
+			}, bugtracker => {
+				mailto => 'bug-Ham-DXCC-Lookup@rt.cpan.org',
+				url => 'https://github.com/nigelhorne/Ham-DXCC-Lookup/issues',
+				# web => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Ham-DXCC-Lookup',
+				web => 'https://github.com/nigelhorne/Ham-DXCC-Lookup/issues'
+			}
+		},
+	},
+	MIN_PERL_VERSION => '5.010',
 	PL_FILES => (defined($ENV{'AUTOMATED_TESTING'}) ? {} : {'bin/create_db.PL' => 'bin/create_db'}),
-    ($ExtUtils::MakeMaker::VERSION >= 6.64
-        ? (LICENSE => 'GPL')
-        : ()), dist => $dist,
+	($ExtUtils::MakeMaker::VERSION >= 6.64
+	? (LICENSE => 'GPL')
+	: ()), dist => $dist,
 	clean		=> { FILES => 'Ham-DXCC-Lookup-*' },
 );
