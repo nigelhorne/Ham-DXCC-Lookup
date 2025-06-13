@@ -9,6 +9,15 @@ if(defined($ENV{'GITHUB_ACTION'}) || defined($ENV{'CIRCLECI'}) || defined($ENV{'
 	$ENV{'NO_NETWORK_TESTING'} = 1;
 }
 
+my $dist = {
+	COMPRESS => 'gzip -9f',	# Compress tarball using gzip
+	SUFFIX => 'gz',	# File suffix for tarball
+};
+
+if($^O eq 'darwin') {
+	$dist->{'TAR'} = 'gtar';
+}
+
 WriteMakefile(
     NAME         => 'Ham::DXCC::Lookup',
     VERSION_FROM => 'lib/Ham/DXCC/Lookup.pm', # finds $VERSION
@@ -34,5 +43,6 @@ WriteMakefile(
 	PL_FILES => (defined($ENV{'AUTOMATED_TESTING'}) ? {} : {'bin/create_db.PL' => 'bin/create_db'}),
     ($ExtUtils::MakeMaker::VERSION >= 6.64
         ? (LICENSE => 'GPL')
-        : ()),
+        : ()), dist => $dist,
+	clean		=> { FILES => 'Ham-DXCC-Lookup-*' },
 );
