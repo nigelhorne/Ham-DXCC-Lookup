@@ -6,7 +6,7 @@ use Carp;
 use Text::CSV;
 use Readonly;
 
-Readonly my $CSV_FILE => __FILE__ =~ s{Ham/DXCC/Lookup\.pm}{../scripts/ctydat_full.csv}r;
+Readonly my $CSV_FILE => __FILE__ =~ s{Ham/DXCC/Lookup\.pm}{../data/ctydat_full.csv}r;
 
 our @EXPORT_OK = qw(lookup_dxcc);
 our $VERSION = '0.04';
