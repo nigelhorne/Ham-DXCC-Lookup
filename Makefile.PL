@@ -35,6 +35,7 @@ WriteMakefile(
 		'Exporter' => 0,
 		'FindBin' => 0,
 		'Text::CSV' => 0,
+		'Text::xSV::Slurp' => 0,
 	}, TEST_REQUIRES => {
 		'Test::DescribeMe' => 0,
 		'Test::Most' => 0,
