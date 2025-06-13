@@ -1,85 +1,21 @@
 package Ham::DXCC::Lookup;
+
 use strict;
 use warnings;
+
 use Exporter 'import';
-use Carp;
 use Database::Abstraction;
 use Ham::DXCC::Lookup::DB::ctydat_full;
-# use Text::CSV;
-# use Readonly;
-
-# Readonly my $CSV_FILE => __FILE__ =~ s{Ham/DXCC/Lookup\.pm}{../data/ctydat_full.csv}r;
 
 BEGIN {
 	Database::Abstraction::init({ directory => 'data' });
 };
 
 my $db = Ham::DXCC::Lookup::DB::ctydat_full->new();
+my @prefixes;
 
 our @EXPORT_OK = qw(lookup_dxcc);
-our $VERSION = '0.04';
-
-# my %by_prefix;
-# {
-    # open my $fh, '<:encoding(utf8)', $CSV_FILE or croak "Can't open $CSV_FILE: $!";
-    # my $csv = Text::CSV->new({binary=>1, auto_diag=>1});
-    # my $hdr = $csv->getline($fh);
-    # $csv->column_names(@$hdr);
-    # while (my $row = $csv->getline_hr($fh)) {
-        # my $pre = uc $row->{prefix};
-        # $by_prefix{$pre} = {
-            # dxcc      => $row->{dxcc_name},
-            # iso       => $row->{iso} || '',
-            # cq_zone   => $row->{cq_zone} || '',
-            # itu_zone  => $row->{itu_zone} || '',
-            # continent => $row->{continent} || '',
-            # lat       => $row->{latitude} || '',
-            # lon       => $row->{longitude} || '',
-            # gmt_offset => $row->{gmt_offset} || '',
-            # dxcc_number => $row->{dxcc_number} || '',
-        # };
-    # }
-# }
-
-# sub _lookup_dxcc {
-    # my ($callsign) = @_;
-    # croak "No callsign provided" unless $callsign;
-    # $callsign = uc $callsign;
-    # for my $pre (sort { length($b) <=> length($a) } keys %by_prefix) {
-        # return $by_prefix{$pre} if index($callsign, $pre) == 0;
-    # }
-    # return {
-        # dxcc       => 'Unknown',
-        # iso        => '',
-        # cq_zone    => '',
-        # itu_zone   => '',
-        # continent  => '',
-        # lat        => '',
-        # lon        => '',
-        # gmt_offset => '',
-        # dxcc_number => '',
-    # };
-# }
-
-sub lookup_dxcc {
-	my $callsign = shift;
-
-	if(my $rc = $db->fetchrow_hashref({ prefix => "=$callsign" })) {
-		return $rc;
-	}
-	my @prefixes = $db->prefix();
-
-	for my $prefix (sort { length($b) <=> length($a) } @prefixes) {
-		if(index($callsign, $prefix) == 0) {
-			return $db->fetchrow_hashref({ prefix => $prefix });
-		}
-	}
-	return {};
-}
-
-1;
-
-__END__
+our $VERSION = '0.01';
 
 =head1 NAME
 
@@ -101,6 +37,31 @@ This module provides a simple lookup mechanism to return the DXCC entity and ISO
 =head2 lookup_dxcc($callsign)
 
 Returns a hashref with C<dxcc> and C<iso> for the given callsign.
+
+=cut
+
+sub lookup_dxcc
+{
+	my $callsign = shift;
+
+	if(my $rc = $db->fetchrow_hashref({ prefix => "=$callsign" })) {
+		return $rc;
+	}
+	if(scalar(@prefixes) == 0) {
+		@prefixes = $db->prefix();
+	}
+
+	for my $prefix (sort { length($b) <=> length($a) } @prefixes) {
+		if(index($callsign, $prefix) == 0) {
+			return $db->fetchrow_hashref({ prefix => $prefix });
+		}
+	}
+	return {};
+}
+
+1;
+
+__END__
 
 =head1 AUTHOR
 

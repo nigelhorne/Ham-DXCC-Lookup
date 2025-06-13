@@ -40,6 +40,7 @@ while(my $line = <$cty>) {
 	$lon	  =~ s/^\s+//;
 	$lon	  =~ s/\s+$//;
 	$lon =~ s/:$//;
+	$gmt_offset	  =~ s/^\s+//;
 	$gmt_offset	  =~ s/\s+$//;
 	$gmt_offset =~ s/:$//;
 	$primary_prefix =~ s/\s+$//;
