@@ -69,8 +69,6 @@ sub lookup_dxcc {
 	}
 	my @prefixes = $db->prefix();
 
-	::diag(scalar(@prefixes));
-
 	for my $prefix (sort { length($b) <=> length($a) } @prefixes) {
 		if(index($callsign, $prefix) == 0) {
 			return $db->fetchrow_hashref({ prefix => $prefix });
