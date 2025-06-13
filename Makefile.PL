@@ -7,6 +7,12 @@ if(defined($ENV{'GITHUB_ACTION'}) || defined($ENV{'CIRCLECI'}) || defined($ENV{'
 	warn 'AUTOMATED_TESTING added for you' if(!defined($ENV{'AUTOMATED_TESTING'}));
 	$ENV{'AUTOMATED_TESTING'} = 1;
 	$ENV{'NO_NETWORK_TESTING'} = 1;
+
+	if(!-d 'data') {
+		mkdir 'data', 0755;
+	}
+	open(my $out, '>', 'data/ctydat_full.csv');
+	print $out "prefix,dxcc_name,iso,cq_zone,itu_zone,continent,latitude,longitude,gmt_offset,primary_prefix\n";
 }
 
 my $dist = {
@@ -22,7 +28,7 @@ WriteMakefile(
     NAME         => 'Ham::DXCC::Lookup',
     VERSION_FROM => 'lib/Ham/DXCC/Lookup.pm', # finds $VERSION
     AUTHOR       => 'Nigel Horne <njh@nigelhorne.com',
-    ABSTRACT     => 'Look up DXCC and ISO country information for amateur radio call signs',
+    ABSTRACT_FROM => 'lib/Ham/DXCC/Lookup.pm',
     PREREQ_PM    => {
 	'Database::Abstraction' => 0,
         'Exporter' => 0,
