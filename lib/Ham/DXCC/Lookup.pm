@@ -5,9 +5,9 @@ use warnings;
 
 use Exporter 'import';
 use FindBin qw($Bin);
-use Ham::DXCC::Lookup::DB::ctydat_full;
+use Ham::DXCC::Lookup::DB::cty;
 
-our $db = Ham::DXCC::Lookup::DB::ctydat_full->new({ directory => "$Bin/../data" });
+our $db = Ham::DXCC::Lookup::DB::cty->new({ directory => "$Bin/../data" });
 our @prefixes;
 
 our @EXPORT_OK = qw(lookup_dxcc);

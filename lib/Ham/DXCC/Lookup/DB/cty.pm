@@ -1,6 +1,9 @@
-package Ham::DXCC::Lookup::DB::ctydat_full;
+package Ham::DXCC::Lookup::DB::cty;
 
-# ctydat_full.csv driver
+use warnings;
+use strict;
+
+# cty.csv driver
 
 use Database::Abstraction;
 

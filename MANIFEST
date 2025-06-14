@@ -2,7 +2,7 @@ bin/create_db.PL
 Changes
 downloads/cty.dat
 lib/Ham/DXCC/Lookup.pm
-lib/Ham/DXCC/Lookup/DB/ctydat_full.pm
+lib/Ham/DXCC/Lookup/DB/cty.pm
 LICENSE
 Makefile.PL
 MANIFEST

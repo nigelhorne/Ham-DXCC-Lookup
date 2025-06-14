@@ -11,7 +11,7 @@ if(defined($ENV{'GITHUB_ACTION'}) || defined($ENV{'CIRCLECI'}) || defined($ENV{'
 	if(!-d 'data') {
 		mkdir 'data', 0755;
 	}
-	open(my $out, '>', 'data/ctydat_full.csv');
+	open(my $out, '>', 'data/cty.csv');
 	print $out "prefix,dxcc_name,iso,cq_zone,itu_zone,continent,latitude,longitude,gmt_offset,primary_prefix\n";
 }
 
