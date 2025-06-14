@@ -19,6 +19,12 @@ This module provides a simple lookup mechanism to return the DXCC entity from a 
 
 Returns a hashref with `dxcc` for the given callsign.
 
+## run
+
+You can also run this module from the command line:
+
+    perl lib/Ham/DXCC/Lookup.pm G4ABC
+
 # SUPPORT
 
 This module is provided as-is without any warranty.

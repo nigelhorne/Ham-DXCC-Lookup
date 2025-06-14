@@ -56,6 +56,30 @@ sub lookup_dxcc
 	return {};
 }
 
+=head2 run
+
+You can also run this module from the command line:
+
+    perl lib/Ham/DXCC/Lookup.pm G4ABC
+
+=cut
+
+__PACKAGE__->run(@ARGV) unless caller();
+
+sub run {
+	require Data::Dumper;
+
+	my $program = shift;
+
+	foreach my $callsign(@_) {
+		if(my $rc = lookup_dxcc($callsign)) {
+			print Data::Dumper->new([$rc])->Dump();
+		} else {
+			die "$0: $1 not found";
+		}
+	}
+}
+
 1;
 
 __END__
