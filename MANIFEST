@@ -1,5 +1,6 @@
 bin/create_db.PL
 Changes
+cpanfile
 downloads/cty.dat
 lib/Ham/DXCC/Lookup.pm
 lib/Ham/DXCC/Lookup/DB/cty.pm
