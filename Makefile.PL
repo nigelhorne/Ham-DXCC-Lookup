@@ -25,11 +25,11 @@ if($^O eq 'darwin') {
 }
 
 WriteMakefile(
-	NAME         => 'Ham::DXCC::Lookup',
+	NAME => 'Ham::DXCC::Lookup',
 	VERSION_FROM => 'lib/Ham/DXCC/Lookup.pm', # finds $VERSION
-	AUTHOR       => 'Nigel Horne <njh@nigelhorne.com',
+	AUTHOR => 'Nigel Horne <njh@nigelhorne.com',
 	ABSTRACT_FROM => 'lib/Ham/DXCC/Lookup.pm',
-	PREREQ_PM    => {
+	PREREQ_PM => {
 		'Database::Abstraction' => 0,
 		'DBD::CSV' => 0,
 		'Exporter' => 0,
@@ -40,6 +40,7 @@ WriteMakefile(
 		'Test::DescribeMe' => 0,
 		'Test::Most' => 0,
 		'Test::Needs' => 0,
+		'Test::Settings' => 0,
 	},
 	META_MERGE => {	# https://perldoc.perl.org/CPAN::Meta::Spec
 		'meta-spec' => { version => 2 },
@@ -50,7 +51,7 @@ WriteMakefile(
 				type => 'git',
 				url => 'git://github.com/nigelhorne/Ham-DXCC-Lookup.git',
 				web => 'https://github.com/nigelhorne/Ham-DXCC-Lookup',
-				# license    => 'http://dev.perl.org/licenses/',
+				# license => 'http://dev.perl.org/licenses/',
 			}, bugtracker => {
 				mailto => 'bug-Ham-DXCC-Lookup@rt.cpan.org',
 				url => 'https://github.com/nigelhorne/Ham-DXCC-Lookup/issues',
