@@ -2,6 +2,10 @@
 
 Ham::DXCC::Lookup - Look up DXCC entity from amateur radio callsign
 
+# VERSION
+
+Version 0.02
+
 # SYNOPSIS
 
     use Ham::DXCC::Lookup qw(lookup_dxcc);
