@@ -34,6 +34,7 @@ WriteMakefile(
 		'DBD::CSV' => 0,
 		'Exporter' => 0,
 		'FindBin' => 0,
+		'Params::Get' => 0,
 		'Text::CSV' => 0,
 		'Text::xSV::Slurp' => 0,
 	}, TEST_REQUIRES => {

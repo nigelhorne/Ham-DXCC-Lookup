@@ -5,6 +5,8 @@ use warnings;
 
 use Exporter 'import';
 use FindBin qw($Bin);
+use Params::Get;
+
 use Ham::DXCC::Lookup::DB::cty;
 
 our $db = Ham::DXCC::Lookup::DB::cty->new({ directory => "$Bin/../data" });
@@ -38,7 +40,8 @@ Returns a hashref with C<dxcc> for the given callsign.
 
 sub lookup_dxcc
 {
-	my $callsign = shift;
+	my $params = Params::Get::get_params('callsign', \@_);
+	my $callsign = $params->{callsign};
 
 	if(my $rc = $db->fetchrow_hashref({ prefix => "=$callsign" })) {
 		return $rc;
