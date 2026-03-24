@@ -35,6 +35,7 @@ WriteMakefile(
 		'DBD::CSV' => 0,
 		'Exporter' => 0,
 		'FindBin' => 0,
+		'Module::Locate' => 0,
 		'Params::Get' => 0,
 		'Params::Validate::Strict' => 0,
 		'Text::CSV' => 0,

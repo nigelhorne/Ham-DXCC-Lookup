@@ -7,6 +7,7 @@ requires 'DBD::CSV';
 requires 'Database::Abstraction';
 requires 'Exporter';
 requires 'FindBin';
+requires 'Module::Locate';
 requires 'Params::Get';
 requires 'Params::Validate::Strict';
 requires 'Text::CSV';
