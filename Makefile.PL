@@ -41,6 +41,7 @@ WriteMakefile(
 		'Text::xSV::Slurp' => 0,
 	}, TEST_REQUIRES => {
 		'App::Test::Generator' => 0.27,
+		'Data::Random' => 0,
 		'IPC::Run3' => 0,
 		'IPC::System::Simple' => 0,
 		'Test::DescribeMe' => 0,
