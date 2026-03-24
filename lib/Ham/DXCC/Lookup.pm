@@ -3,9 +3,11 @@ package Ham::DXCC::Lookup;
 use strict;
 use warnings;
 
+use Carp;
 use Exporter 'import';
 use FindBin qw($Bin);
 use Params::Get;
+use Params::Validate::Strict;
 
 use Ham::DXCC::Lookup::DB::cty;
 
@@ -40,23 +42,34 @@ Returns a hashref with C<dxcc> for the given callsign.
 
 sub lookup_dxcc
 {
-	my $params = Params::Get::get_params('callsign', \@_);
-	my $callsign = $params->{callsign};
-
-	if(my $rc = $db->fetchrow_hashref({ prefix => "=$callsign" })) {
-		return $rc;
-	}
-
-	if(scalar(@prefixes) == 0) {
-		@prefixes = $db->prefix();
-	}
-
-	for my $prefix (sort { length($b) <=> length($a) } @prefixes) {
-		if(index($callsign, $prefix) == 0) {
-			return $db->fetchrow_hashref({ prefix => $prefix });
+        my $params = Params::Validate::Strict::validate_strict({
+		args => Params::Get::get_params('callsign', \@_),
+		schema => {
+			callsign => {
+				type => 'string',
+				matches => qr/^([A-Z0-9]{1,3})([0-9])([A-Z]{1,4})$/,
+				min => 3,
+			}
 		}
+	}) or Carp::croak 'Usage: ', __PACKAGE__, '::lookup(callsign => $str)';
+
+	if(my $callsign = $params->{callsign}) {
+		if(my $rc = $db->fetchrow_hashref({ prefix => "=$callsign" })) {
+			return $rc;
+		}
+
+		if(scalar(@prefixes) == 0) {
+			@prefixes = $db->prefix();
+		}
+
+		for my $prefix (sort { length($b) <=> length($a) } @prefixes) {
+			if(index($callsign, $prefix) == 0) {
+				return $db->fetchrow_hashref({ prefix => $prefix });
+			}
+		}
+		return {};
 	}
-	return {};
+	Carp::croak 'Usage: ', __PACKAGE__, '::lookup(callsign => $str)';
 }
 
 =head2 run

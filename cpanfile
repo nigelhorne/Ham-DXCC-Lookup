@@ -2,10 +2,13 @@
 
 requires 'perl', '5.010';
 
+requires 'Carp';
 requires 'DBD::CSV';
 requires 'Database::Abstraction';
 requires 'Exporter';
 requires 'FindBin';
+requires 'Params::Get';
+requires 'Params::Validate::Strict';
 requires 'Text::CSV';
 requires 'Text::xSV::Slurp';
 
