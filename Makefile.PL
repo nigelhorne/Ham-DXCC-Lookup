@@ -40,6 +40,7 @@ WriteMakefile(
 		'Text::CSV' => 0,
 		'Text::xSV::Slurp' => 0,
 	}, TEST_REQUIRES => {
+		'App::Test::Generator' => 0.27,
 		'Test::DescribeMe' => 0,
 		'Test::Most' => 0,
 		'Test::Needs' => 0,
