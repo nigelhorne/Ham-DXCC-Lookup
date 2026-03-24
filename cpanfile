@@ -14,6 +14,7 @@ requires 'Text::xSV::Slurp';
 
 on 'test' => sub {
 	requires 'App::Test::Generator', '0.27';
+	requires 'IPC::System::Simple';
 	requires 'Test::DescribeMe';
 	requires 'Test::Most';
 	requires 'Test::Needs';
