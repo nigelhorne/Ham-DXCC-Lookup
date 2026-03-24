@@ -19,6 +19,7 @@ on 'test' => sub {
 	requires 'Test::Most';
 	requires 'Test::Needs';
 	requires 'Test::Settings';
+	requires 'Test::Which';
 };
 on 'develop' => sub {
 	requires 'Devel::Cover';

@@ -46,6 +46,7 @@ WriteMakefile(
 		'Test::Most' => 0,
 		'Test::Needs' => 0,
 		'Test::Settings' => 0,
+		'Test::Which' => 0,
 	},
 	META_MERGE => {	# https://perldoc.perl.org/CPAN::Meta::Spec
 		'meta-spec' => { version => 2 },
