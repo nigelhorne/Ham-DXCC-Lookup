@@ -43,6 +43,7 @@ WriteMakefile(
 		'App::Test::Generator' => 0.27,
 		'Data::Random' => 0,
 		'Data::Random::String' => 0,
+		'Data::Random::String::Matches' => 0,
 		'IPC::Run3' => 0,
 		'IPC::System::Simple' => 0,
 		'Test::DescribeMe' => 0,
