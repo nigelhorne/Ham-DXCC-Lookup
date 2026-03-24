@@ -1,6 +1,6 @@
 Revision history for Ham-DXCC-Lookup
 
-0.02
+0.02	Tue Mar 24 10:48:52 EDT 2026
 	Renamed cty_dat_full.csv to cty.csv - it's more consistent
 	Allow running from the command line
 	Try to improve the chance of working on broken smokers

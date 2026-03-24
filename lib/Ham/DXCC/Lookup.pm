@@ -15,11 +15,18 @@ my $dbh;
 our @prefixes;
 
 our @EXPORT_OK = qw(lookup_dxcc);
-our $VERSION = '0.01';
 
 =head1 NAME
 
 Ham::DXCC::Lookup - Look up DXCC entity from amateur radio callsign
+
+=head1 VERSION
+
+Version 0.02
+
+=cut
+
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
