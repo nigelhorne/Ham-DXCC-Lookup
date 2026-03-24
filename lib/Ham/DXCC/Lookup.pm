@@ -11,7 +11,7 @@ use Params::Validate::Strict;
 
 use Ham::DXCC::Lookup::DB::cty;
 
-our $db = Ham::DXCC::Lookup::DB::cty->new({ directory => "$Bin/../data" });
+my $dbh;
 our @prefixes;
 
 our @EXPORT_OK = qw(lookup_dxcc);
@@ -42,6 +42,26 @@ Returns a hashref with C<dxcc> for the given callsign.
 
 sub lookup_dxcc
 {
+	if(!defined($dbh)) {
+		my $db = "$Bin/../data";
+		eval {
+			$dbh = Ham::DXCC::Lookup::DB::cty->new({ directory => $db });
+		};
+		if(!defined($dbh)) {
+			require Module::Locate;
+			if(my $db2 = Module::Locate::locate(__PACKAGE__)) {
+				require File::Basename;
+				$db2 = File::Basename::dirname($db2) . "/../../../data";
+				$dbh = Ham::DXCC::Lookup::DB::cty->new({ directory => $db2 });
+				if(!defined($dbh)) {
+					croak("No database found at $db or $db2");
+				}
+			} else {
+				croak("No database found at $db2");
+			}
+		}
+	}
+
         my $params = Params::Validate::Strict::validate_strict({
 		args => Params::Get::get_params('callsign', \@_),
 		schema => {
@@ -54,17 +74,17 @@ sub lookup_dxcc
 	}) or Carp::croak 'Usage: ', __PACKAGE__, '::lookup(callsign => $str)';
 
 	if(my $callsign = $params->{callsign}) {
-		if(my $rc = $db->fetchrow_hashref({ prefix => "=$callsign" })) {
+		if(my $rc = $dbh->fetchrow_hashref({ prefix => "=$callsign" })) {
 			return $rc;
 		}
 
 		if(scalar(@prefixes) == 0) {
-			@prefixes = $db->prefix();
+			@prefixes = $dbh->prefix();
 		}
 
 		for my $prefix (sort { length($b) <=> length($a) } @prefixes) {
 			if(index($callsign, $prefix) == 0) {
-				return $db->fetchrow_hashref({ prefix => $prefix });
+				return $dbh->fetchrow_hashref({ prefix => $prefix });
 			}
 		}
 		return {};

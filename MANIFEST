@@ -13,6 +13,7 @@ t/10-compile.t
 t/30-basics.t
 t/eof.t
 t/eol.t
+t/fuzz.t
 t/kwalitee.t
 t/pod-synopsis.t
 t/pod.t
